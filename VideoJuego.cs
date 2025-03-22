@@ -2,10 +2,10 @@ namespace InventarioVideojuegos;
 
 public class VideoJuego
 {
-    private string titulo { get; set; }
-    private string genero { get; set; }
-    private double precio { get; set; }
-    private int cantStock { get; set; }
+    public string titulo { get; set; }
+    public string genero { get; set; }
+    public double precio { get; set; }
+    public int cantStock { get; set; }
 
     public VideoJuego(string titulo, string genero, double precio, int cantStock)
     {
@@ -13,5 +13,10 @@ public class VideoJuego
         this.genero = genero;
         this.precio = precio;
         this.cantStock = cantStock;
+    }
+
+    public VideoJuego()
+    {
+        
     }
 }
