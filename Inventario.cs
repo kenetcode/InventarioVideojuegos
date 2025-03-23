@@ -2,72 +2,64 @@ namespace InventarioVideojuegos;
 
 public class Inventario
 {
-    List<VideoJuego> videoJuegos = new List<VideoJuego>(100);
-    private VideoJuego videoJuego = new VideoJuego();
-
-    public void agregarVideoJuego()
+    public static List<VideoJuego> videoJuegos = new List<VideoJuego>(100);
+    
+    public static void agregarVideoJuego()
     {
-        Console.WriteLine($"Agregue los datos del videojuego {videoJuegos.Count + 1}");
-        videoJuego.titulo = ingresarDato("Digite el título: ");
-        videoJuego.genero = ingresarDato("Digite el genero: ");
-        videoJuego.precio = validarPrecio(ingresarDato("Ingrese el precio del videojuego"));
-        videoJuego.cantStock = validarCantStock(ingresarDato("Ingrese la cantidad de stock del videojuego"));
+        VideoJuego videoJuego = new VideoJuego();
+        Console.WriteLine($"\nAgregue los datos del videojuego {videoJuegos.Count + 1}");
+        videoJuego.titulo = ValidadorDatos.ingresarDato("\nDigite el título: ");
+        videoJuego.genero = ValidadorDatos.ingresarDato("\nDigite el genero: ");
+        videoJuego.precio = ValidadorDatos.validarPrecio(ValidadorDatos.ingresarDato("\nIngrese el precio del videojuego"));
+        videoJuego.cantStock = ValidadorDatos.validarEntero(ValidadorDatos.ingresarDato("\nIngrese la cantidad de stock del videojuego"));
         videoJuegos.Add(videoJuego);
+        Console.WriteLine("\nPresione cualquier tecla para continuar ...");
+        Console.ReadLine();
     }
 
-    public void listarVideoJuegos()
+    public static void listarVideoJuegos()
     {
         int n = 0;
         foreach (var listVideoJuego in videoJuegos)
         {
-            Console.WriteLine($"----------Datos del video juego {n + 1}----------");
+            n++;
+            Console.WriteLine($"----------Datos del video juego {n}----------");
             Console.WriteLine($"Nombre: {listVideoJuego.titulo}");
             Console.WriteLine($"Genero: {listVideoJuego.genero}");
             Console.WriteLine($"Precio: {listVideoJuego.precio}");
             Console.WriteLine($"Cantidad de stock: {listVideoJuego.cantStock}");
         }
+        Console.WriteLine("\nPresione cualquier tecla para continuar ...");
+        Console.ReadLine();
     }
 
-    public string ingresarDato(string indicacion)
+    public static void buscarVideoJuego()
     {
-        Console.WriteLine(indicacion);
-        string valor = Console.ReadLine();
-        return valor;
-    }
-
-    public double validarPrecio(string valor)
-    {
-        double valorDouble;
+        string titulo = ValidadorDatos.ingresarDato("\nIngrese el titulo del video juego que quiere buscar: ");
         
-        if (double.TryParse(valor, out valorDouble))
-            return valorDouble;
+        string tituloTemp = "";
         
-        Console.WriteLine("El valor ingresado no es un número válido.");
-        string newDato;
-    
-        do
+        foreach (var videoJuego in videoJuegos)
         {
-            newDato = ingresarDato("Por favor ingrese un valor numérico");
-        } while (!double.TryParse(newDato, out valorDouble));
-    
-        return valorDouble;
-    }
+            int n = 0;
+            if (videoJuego.titulo == titulo)
+            {
+                Console.WriteLine("\n----------Los datos del video juego solicitado son: ---");
+                Console.WriteLine($"----------Datos del video juego {n + 1}----------------");
+                Console.WriteLine($"Nombre: {videoJuego.titulo}");
+                Console.WriteLine($"Genero: {videoJuego.genero}");
+                Console.WriteLine($"Precio: {videoJuego.precio}");
+                Console.WriteLine($"Cantidad de stock: {videoJuego.cantStock}");
+                tituloTemp = videoJuego.titulo;
+                n++;
+            }
+        }
 
-    public int validarCantStock(string valor)
-    {
-        int valorInt;
-        
-        if (int.TryParse(valor, out valorInt))
-            return valorInt;
-        
-        Console.WriteLine("El valor ingresado no es un número entero válido.");
-        string newDato;
-    
-        do
+        if (tituloTemp != titulo)
         {
-            newDato = ingresarDato("Por favor ingrese un valor numérico entero");
-        } while (!int.TryParse(newDato, out valorInt));
-    
-        return valorInt;
+            Console.WriteLine("\nLo sentimos, su video juego no a sido encontrado");
+        }
+        Console.WriteLine("\nPresione cualquier tecla para continuar ...");
+        Console.ReadLine();
     }
 }
