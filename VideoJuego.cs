@@ -3,7 +3,7 @@ namespace InventarioVideojuegos;
 /// <summary>
 /// Representa un videojuego en el inventario.
 /// Contiene toda la información básica que necesitamos para gestionar un juego.
-/// </summary>
+/// </summary>que
 public class VideoJuego
 {
     // Título del videojuego (ej. "FIFA 2023")
