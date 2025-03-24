@@ -130,7 +130,6 @@ public class Inventario
         Console.WriteLine($"\nEl valor total del inventario es ${valorTotalInventario}");
         Console.WriteLine($"\nEl juego más caro tiene un valor de ${precioMax}");
         Console.WriteLine($"\nEl juego más barato tiene un valor de ${precioMin}");
-        
-        
+        Console.ReadLine();
     }
 }
