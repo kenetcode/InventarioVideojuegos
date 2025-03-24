@@ -40,8 +40,12 @@ public class Menu
                     option = menuOptions();
                     break;
                 case 4:
+                    Inventario.actualizarStock();
+                    option = menuOptions();
                     break;
                 case 5:
+                    Inventario.estadisticas();
+                    option = menuOptions();
                     break;
                 case 6:
                     Console.WriteLine("\nGracias por usar el inventario de video juegos");
