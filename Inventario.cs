@@ -2,10 +2,18 @@ namespace InventarioVideojuegos;
 
 using System.Linq;
 
+/// <summary>
+/// Clase que maneja todas las operaciones relacionadas con el inventario de videojuegos.
+/// Contiene métodos para agregar, listar, buscar y actualizar videojuegos.
+/// </summary>
 public class Inventario
 {
+    // Lista que almacena todos los videojuegos del inventario (con capacidad inicial para 100)
     public static List<VideoJuego> videoJuegos = new List<VideoJuego>(100);
     
+    /// <summary>
+    /// Agrega un nuevo videojuego al inventario solicitando sus datos al usuario
+    /// </summary>
     public static void agregarVideoJuego()
     {
         VideoJuego videoJuego = new VideoJuego();
@@ -19,6 +27,10 @@ public class Inventario
         Console.ReadLine();
     }
 
+    /// <summary>
+    /// Muestra todos los videojuegos disponibles en el inventario
+    /// con su información detallada
+    /// </summary>
     public static void listarVideoJuegos()
     {
         int n = 0;
@@ -35,8 +47,13 @@ public class Inventario
         Console.ReadLine();
     }
 
+    /// <summary>
+    /// Permite buscar un videojuego por su título y muestra su información
+    /// si lo encuentra en el inventario
+    /// </summary>
     public static void buscarVideoJuego()
     {
+        // Pedimos el título y lo convertimos a minúsculas para hacer una búsqueda sin distinguir mayúsculas/minúsculas
         string titulo = ValidadorDatos.ingresarDato("\nIngrese el titulo del video juego que quiere buscar: ").ToLower();
         
         string tituloTemp = "";
@@ -45,6 +62,7 @@ public class Inventario
         {
             videoJuego.titulo = videoJuego.titulo.ToLower();
             
+            // Si encontramos el juego, mostramos sus datos
             if (videoJuego.titulo == titulo)
             {
                 Console.WriteLine("\n----------Los datos del video juego solicitado son: ---");
@@ -58,6 +76,7 @@ public class Inventario
             n++;
         }
 
+        // Si no encontramos el juego, mostramos un mensaje
         if (tituloTemp != titulo)
         {
             Console.WriteLine("\nLo sentimos, su video juego no a sido encontrado");
@@ -66,8 +85,12 @@ public class Inventario
         Console.ReadLine();
     }
 
+    /// <summary>
+    /// Permite actualizar la cantidad en stock de un videojuego específico
+    /// </summary>
     public static void actualizarStock()
     {
+        // Pedimos el título y lo convertimos a minúsculas para la búsqueda
         string titulo = ValidadorDatos.ingresarDato("\nIngrese el titulo del video juego al que quiere actualizarle el stock: ").ToLower();
         
         string tituloTemp = "";
@@ -78,6 +101,7 @@ public class Inventario
             string tituloOriginal = videoJuego.titulo;
             string tituloLower = tituloOriginal.ToLower();
 
+            // Si encontramos el juego, actualizamos su stock
             if (tituloLower == titulo)
             {
                 Console.WriteLine($"\nStock actual del video juego {tituloOriginal}: Stock = {videoJuego.cantStock}\n");
@@ -94,6 +118,7 @@ public class Inventario
             n++;
         }
         
+        // Si no encontramos el juego, mostramos un mensaje
         if (tituloTemp != titulo)
         {
             Console.WriteLine("\nLo sentimos, su video juego no a sido encontrado");
@@ -102,6 +127,13 @@ public class Inventario
         Console.ReadLine();
     }
 
+    /// <summary>
+    /// Muestra estadísticas generales del inventario:
+    /// - Cantidad total de juegos
+    /// - Valor total del inventario
+    /// - Precio del juego más caro
+    /// - Precio del juego más barato
+    /// </summary>
     public static void estadisticas()
     {
         double valorTotalInventario = 0;
@@ -110,6 +142,7 @@ public class Inventario
         var cantTotalJuegos = videoJuegos.Count;
         int n = 0;
         
+        // Creamos un array con los precios para facilitar los cálculos
         double[] arrayPrecios = new double[cantTotalJuegos];
 
         foreach (var videoJuego in videoJuegos)
@@ -118,14 +151,17 @@ public class Inventario
             n++;
         }
 
+        // Calculamos el valor total del inventario
         for (int i = 0; i < arrayPrecios.Length; i++)
         {
             valorTotalInventario = valorTotalInventario + arrayPrecios[i];
         }
 
+        // Obtenemos el precio mínimo y máximo usando LINQ
         precioMin = arrayPrecios.Min();
         precioMax = arrayPrecios.Max();
         
+        // Mostramos las estadísticas
         Console.WriteLine($"\nLa cantidad total de Video Juegos Almacenados = {cantTotalJuegos} Juegos");
         Console.WriteLine($"\nEl valor total del inventario es ${valorTotalInventario}");
         Console.WriteLine($"\nEl juego más caro tiene un valor de ${precioMax}");
